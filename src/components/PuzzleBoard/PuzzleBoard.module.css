@@ -1,0 +1,115 @@
+.board {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(108,99,255,0.15);
+  border: 2px solid var(--clr-border);
+  position: relative;
+  background: var(--clr-bg-surface);
+}
+
+/* ─── Piece ─────────────────────────────────────────────────────── */
+.piece {
+  position: relative;
+  cursor: grab;
+  background-size: cover;
+  transition:
+    box-shadow var(--dur-normal) var(--ease-smooth),
+    transform var(--dur-fast) var(--ease-smooth),
+    border-color var(--dur-normal);
+  border: 1.5px solid rgba(255,255,255,0.06);
+  will-change: transform;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.piece:hover:not(.disabled):not(.dragging) {
+  box-shadow: inset 0 0 0 2px var(--clr-primary), 0 4px 16px rgba(108,99,255,0.25);
+  z-index: 2;
+  transform: scale(1.02);
+}
+
+.piece:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+/* Dragging state */
+.dragging {
+  opacity: 0.3;
+  cursor: grabbing;
+  box-shadow: inset 0 0 0 2px var(--clr-primary);
+  z-index: 10;
+}
+
+/* Drop target */
+.dropTarget {
+  box-shadow: inset 0 0 0 3px var(--clr-accent), 0 0 20px var(--clr-accent-glow);
+  transform: scale(1.03);
+  z-index: 5;
+}
+
+/* Correctly placed */
+.correct {
+  border-color: rgba(0,212,170,0.5) !important;
+  box-shadow: inset 0 0 0 2px var(--clr-accent), 0 0 12px rgba(0,212,170,0.25);
+}
+
+.correct:hover {
+  transform: none !important;
+  cursor: default;
+}
+
+/* Correct badge checkmark */
+.correctBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 0.55rem;
+  background: var(--clr-accent);
+  color: #000;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  z-index: 2;
+  animation: scaleIn var(--dur-normal) var(--ease-spring);
+}
+
+/* Disabled (paused) */
+.disabled {
+  cursor: not-allowed;
+  filter: brightness(0.6) saturate(0.5);
+  pointer-events: none;
+}
+
+/* Subtle grid line overlay */
+.gridLine {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+/* ─── Drag Overlay ───────────────────────────────────────────────── */
+.dragOverlay {
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px var(--clr-primary-glow);
+  border: 2px solid var(--clr-primary);
+  cursor: grabbing;
+  opacity: 0.95;
+  transform: scale(1.06) rotate(1.5deg);
+  transition: none;
+  width: 100%;
+  height: 100%;
+  min-width: 80px;
+  min-height: 80px;
+}

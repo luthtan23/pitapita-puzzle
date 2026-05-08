@@ -1,0 +1,144 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  animation: fadeInUp var(--dur-slow) var(--ease-smooth);
+}
+
+.section { display: flex; flex-direction: column; gap: 12px; }
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+}
+
+/* ── Reference image preview ───────────────────────────────────── */
+.previewWrapper {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--dur-normal);
+}
+
+.previewWrapper:hover {
+  box-shadow: var(--shadow-lg), 0 0 20px var(--clr-primary-glow);
+}
+
+.previewImg {
+  transition: filter var(--dur-normal) var(--ease-smooth),
+              transform var(--dur-slow) var(--ease-smooth);
+  filter: blur(8px) brightness(0.5);
+  transform: scale(1.05);
+}
+
+.peeking .previewImg {
+  filter: blur(0) brightness(1);
+  transform: scale(1);
+}
+
+.peekOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(5,10,20,0.3);
+  transition: opacity var(--dur-normal);
+}
+
+.peekIcon { font-size: 2rem; }
+
+.peekLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Difficulty grid ────────────────────────────────────────────── */
+.diffGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.diffBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--dur-normal) var(--ease-smooth);
+}
+
+.diffBtn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--clr-border-hover);
+  color: var(--clr-text-primary);
+  transform: translateY(-1px);
+}
+
+.diffBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.diffBtnActive {
+  background: rgba(108,99,255,0.1);
+  font-weight: 700;
+}
+
+.diffGrid2 {
+  font-size: 0.68rem;
+  color: var(--clr-text-muted);
+  font-weight: 500;
+}
+
+/* ── Start button ───────────────────────────────────────────────── */
+.startBtn {
+  width: 100%;
+  padding: 14px 20px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+/* ── Mini stats ─────────────────────────────────────────────────── */
+.miniStats {
+  flex-direction: row;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-border);
+}
+
+.miniStat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--clr-text-secondary);
+  font-variant-numeric: tabular-nums;
+}

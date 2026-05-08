@@ -1,0 +1,135 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(5, 10, 20, 0.85);
+  backdrop-filter: blur(12px);
+  animation: fadeIn var(--dur-normal) var(--ease-smooth);
+  overflow: hidden;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  padding: 40px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  overflow: hidden;
+  animation: scaleIn var(--dur-slow) var(--ease-spring);
+  text-align: center;
+}
+
+.trophy {
+  font-size: 4rem;
+  animation: winCelebrate 0.8s var(--ease-spring) both;
+  filter: drop-shadow(0 0 20px #ffd700);
+  line-height: 1;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.subtitle {
+  color: var(--clr-text-secondary);
+  font-size: 1rem;
+  margin-top: -12px;
+}
+
+/* Stars */
+.stars {
+  display: flex;
+  gap: 8px;
+}
+
+.star {
+  font-size: 2rem;
+  display: inline-block;
+  animation: scaleIn 0.4s var(--ease-spring) both;
+}
+
+.starActive {
+  filter: drop-shadow(0 0 10px #ffd700);
+}
+
+.starDim {
+  filter: grayscale(1) opacity(0.3);
+}
+
+/* Stats grid */
+.statsGrid {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.statCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+}
+
+.statIcon { font-size: 1.3rem; }
+
+.statNum {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--clr-text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.statLbl {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--clr-text-muted);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.actions > * { flex: 1; justify-content: center; }
+
+/* Confetti pieces */
+.confetti {
+  position: absolute;
+  top: -20px;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+  z-index: 0;
+}
+
+@media (max-width: 480px) {
+  .modal { padding: 28px 18px 24px; gap: 14px; }
+  .title { font-size: 1.5rem; }
+  .trophy { font-size: 3rem; }
+  .statsGrid { gap: 8px; }
+}

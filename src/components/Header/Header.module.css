@@ -1,0 +1,73 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background: rgba(5, 10, 20, 0.75);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border-bottom: 1px solid var(--clr-border);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04), var(--shadow-sm);
+  animation: fadeIn var(--dur-slow) var(--ease-smooth);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px rgba(108,99,255,0.6));
+  animation: orbFloat 4s ease-in-out infinite;
+}
+
+.logoText {
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e8eeff 30%, var(--clr-primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.logoText strong {
+  font-weight: 900;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.navBtn {
+  font-size: 0.875rem !important;
+  padding: 8px 16px !important;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .inner { padding: 10px 16px; }
+  .logoText { font-size: 1.1rem; }
+  .navBtn span { display: none; }
+  .navBtn { padding: 8px 12px !important; }
+}
