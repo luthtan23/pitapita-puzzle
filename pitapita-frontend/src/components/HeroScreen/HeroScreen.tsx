@@ -49,7 +49,7 @@ export default function HeroScreen({
             width={420}
             height={420}
             className={styles.previewImg}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", width: "100%", height: "auto" }}
             priority
           />
           {/* Puzzle grid overlay */}
