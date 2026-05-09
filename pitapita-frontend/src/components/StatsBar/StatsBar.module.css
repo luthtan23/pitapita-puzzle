@@ -12,11 +12,94 @@
   animation: fadeInUp var(--dur-slow) var(--ease-smooth);
 }
 
+.barSidebar {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  gap: 16px;
+  animation: none;
+}
+
+.barSidebar .statsContent {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+}
+
+.barSidebar .statGroup {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.barSidebar .stat {
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  min-width: 60px;
+  gap: 4px;
+}
+
+.barSidebar .statLabel {
+  font-size: 0.65rem;
+  color: var(--clr-text-muted);
+}
+
+.barSidebar .statValue {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.barSidebar .divider,
+.barSidebar .dividerMain {
+  width: 1px;
+  height: 24px;
+  margin: 0;
+  background: var(--clr-border);
+  opacity: 0.3;
+}
+
+.barSidebar .spacer {
+  display: none;
+}
+
+.barSidebar .controls {
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.barSidebar .ctrlBtn {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.85rem !important;
+  padding: 10px 14px !important;
+}
+
+.statsContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 .statLabel {
@@ -50,12 +133,22 @@
   background-clip: text;
 }
 
-.divider {
+.dividerMain {
   width: 1px;
   height: 36px;
   background: var(--clr-border);
   flex-shrink: 0;
 }
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--clr-border);
+  opacity: 0.3;
+  flex-shrink: 0;
+}
+
+.movesStat { flex: 1; }
 
 .spacer { flex: 1; min-width: 16px; }
 

@@ -1,6 +1,5 @@
-"use client";
-
 import { useEffect, useRef } from "react";
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./WinModal.module.css";
 import type { Difficulty } from "@/types/puzzle";
 import { DIFFICULTY_CONFIGS } from "@/types/puzzle";
@@ -30,6 +29,7 @@ export default function WinModal({
   onPlayAgain,
   onLeaderboard,
 }: WinModalProps) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const cfg = DIFFICULTY_CONFIGS[difficulty];
 
@@ -71,8 +71,8 @@ export default function WinModal({
         <div className={styles.trophy}>🏆</div>
 
         {/* Title */}
-        <h2 className={styles.title}>Puzzle Solved!</h2>
-        <p className={styles.subtitle}>Incredible! You nailed it.</p>
+        <h2 className={styles.title}>{t("game.wellDone")}</h2>
+        <p className={styles.subtitle}>{t("game.youSolved", { moves, time: formatTime(timeSecs) })}</p>
 
         {/* Stars */}
         <div className={styles.stars} aria-label={`${stars} star rating`}>
@@ -92,29 +92,29 @@ export default function WinModal({
           <div className={styles.statCard}>
             <span className={styles.statIcon}>🔢</span>
             <span className={styles.statNum}>{moves}</span>
-            <span className={styles.statLbl}>Moves</span>
+            <span className={styles.statLbl}>{t("common.moves")}</span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statIcon}>⏱️</span>
             <span className={styles.statNum}>{formatTime(timeSecs)}</span>
-            <span className={styles.statLbl}>Time</span>
+            <span className={styles.statLbl}>{t("common.time")}</span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statIcon}>{cfg.emoji}</span>
             <span className={styles.statNum} style={{ color: cfg.color, fontSize: "1rem" }}>
-              {cfg.label}
+              {t(`difficulty.${difficulty.toLowerCase()}`)}
             </span>
-            <span className={styles.statLbl}>Difficulty</span>
+            <span className={styles.statLbl}>{t("common.difficulty")}</span>
           </div>
         </div>
 
         {/* Actions */}
         <div className={styles.actions}>
           <button id="btn-play-again" className="btn-primary" onClick={onPlayAgain}>
-            🔀 Play Again
+            🔀 {t("game.playAgain")}
           </button>
           <button id="btn-view-leaderboard" className="btn-ghost" onClick={onLeaderboard}>
-            🏆 Leaderboard
+            🏆 {t("header.leaderboard")}
           </button>
         </div>
       </div>

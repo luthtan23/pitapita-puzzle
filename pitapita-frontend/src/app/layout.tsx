@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 export const viewport = {
   themeColor: "#a855f7",
@@ -49,7 +50,9 @@ export default function RootLayout({
         <div className="bg-orb orb-1" aria-hidden="true" />
         <div className="bg-orb orb-2" aria-hidden="true" />
         <div className="bg-orb orb-3" aria-hidden="true" />
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

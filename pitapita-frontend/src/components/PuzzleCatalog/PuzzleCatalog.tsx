@@ -1,7 +1,6 @@
-"use client";
-
 import { useState, useRef } from "react";
 import Image from "next/image";
+import { useTranslation } from "@/i18n/LanguageContext";
 import { PUZZLES, PUZZLE_CATEGORIES, PuzzleOption } from "@/data/puzzles";
 import styles from "./PuzzleCatalog.module.css";
 
@@ -11,6 +10,7 @@ interface PuzzleCatalogProps {
 }
 
 export default function PuzzleCatalog({ currentImageUrl, onSelect }: PuzzleCatalogProps) {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,11 +44,11 @@ export default function PuzzleCatalog({ currentImageUrl, onSelect }: PuzzleCatal
             className={`${styles.filterBtn} ${activeCategory === cat ? styles.filterBtnActive : ""}`}
             onClick={() => setActiveCategory(cat)}
           >
-            {cat}
+            {t(`hero.categories.${cat.toLowerCase()}`)}
           </button>
         ))}
         <button className={styles.uploadTriggerBtn} onClick={triggerUpload}>
-          📤 Upload Custom
+          📤 {t("hero.uploadCustom")}
         </button>
         <input
           type="file"

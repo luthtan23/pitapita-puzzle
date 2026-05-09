@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./LeaderboardModal.module.css";
 import type { ScoreEntry, Difficulty } from "@/types/puzzle";
 import { DIFFICULTY_CONFIGS } from "@/types/puzzle";
@@ -22,6 +23,7 @@ function formatDate(iso: string) {
 }
 
 export default function LeaderboardModal({ scores: localScores, onClose }: LeaderboardModalProps) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState<"local" | "global">("local");
   const [globalScores, setGlobalScores] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -61,16 +63,16 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
         {/* Header */}
         <div className={styles.header}>
           <h2 className={styles.title}>
-            <span>🏆</span> Leaderboard
+            <span>🏆</span> {t("leaderboard.title")}
           </h2>
           <button
             id="btn-close-leaderboard"
             className="btn-ghost"
             onClick={onClose}
-            aria-label="Close leaderboard"
+            aria-label={t("common.close")}
             style={{ padding: "6px 12px", fontSize: "0.8rem" }}
           >
-            ✕ Close
+            ✕ {t("common.close")}
           </button>
         </div>
 
@@ -80,13 +82,13 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
             className={`${styles.tab} ${tab === "local" ? styles.activeTab : ""}`}
             onClick={() => setTab("local")}
           >
-            Local
+            {t("leaderboard.local")}
           </button>
           <button 
             className={`${styles.tab} ${tab === "global" ? styles.activeTab : ""}`}
             onClick={() => setTab("global")}
           >
-            Global
+            {t("leaderboard.global")}
           </button>
         </div>
 
@@ -98,18 +100,18 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
               className={`${styles.filterBtn} ${selectedDifficulty === d ? styles.activeFilter : ""}`}
               onClick={() => setSelectedDifficulty(d)}
             >
-              {d === "all" ? "All" : DIFFICULTY_CONFIGS[d].label}
+              {d === "all" ? t("hero.categories.all") : t(`difficulty.${d}`)}
             </button>
           ))}
         </div>
 
         {/* Table */}
         {loading ? (
-          <div className={styles.empty}>Loading...</div>
+          <div className={styles.empty}>{t("common.loading")}</div>
         ) : currentScores.length === 0 ? (
           <div className={styles.empty}>
             <span className={styles.emptyIcon}>🎮</span>
-            <p>No scores yet. {tab === "local" ? "Complete a puzzle to appear here!" : "Be the first to top the global charts!"}</p>
+            <p>{t("leaderboard.noScores", { msg: tab === "local" ? t("leaderboard.localMsg") : t("leaderboard.globalMsg") })}</p>
           </div>
         ) : (
           <div className={styles.tableWrapper}>
@@ -117,11 +119,11 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
               <thead>
                 <tr>
                   <th>#</th>
-                  {tab === "global" && <th>Player</th>}
-                  <th>Difficulty</th>
-                  <th>Moves</th>
-                  <th>Time</th>
-                  <th>Date</th>
+                  {tab === "global" && <th>{t("common.player")}</th>}
+                  <th>{t("common.difficulty")}</th>
+                  <th>{t("common.moves")}</th>
+                  <th>{t("common.time")}</th>
+                  <th>{t("common.date")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,7 +137,7 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
                       </td>
                       {tab === "global" && (
                         <td className={styles.playerCell}>
-                          {entry.user?.username || "Anonymous"}
+                          {entry.user?.username || t("leaderboard.anonymous")}
                         </td>
                       )}
                       <td>
@@ -143,7 +145,7 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
                           className={styles.diffPill}
                           style={{ color: cfg.color, borderColor: `${cfg.color}40`, background: `${cfg.color}15` }}
                         >
-                          {cfg.emoji} {cfg.label}
+                          {cfg.emoji} {t(`difficulty.${entry.difficulty.toLowerCase()}`)}
                         </span>
                       </td>
                       <td className={styles.numCell}>{entry.moves}</td>
@@ -158,7 +160,7 @@ export default function LeaderboardModal({ scores: localScores, onClose }: Leade
         )}
 
         <p className={styles.note}>
-          {tab === "local" ? "Scores are saved locally in your browser." : "Global rankings across all players."}
+          {tab === "local" ? t("leaderboard.noteLocal") : t("leaderboard.noteGlobal")}
         </p>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./HowToModal.module.css";
 
 interface HowToModalProps {
@@ -16,30 +17,33 @@ const STEPS = [
 ];
 
 export default function HowToModal({ onClose }: HowToModalProps) {
+  const { t, tRaw } = useTranslation();
+  const steps = tRaw("howTo.steps") || [];
+
   return (
     <div
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"
-      aria-label="How to play"
+      aria-label={t("howTo.title")}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className={`${styles.modal} glass-card`}>
         <div className={styles.header}>
-          <h2 className={styles.title}><span>❓</span> How to Play</h2>
+          <h2 className={styles.title}><span>❓</span> {t("howTo.title")}</h2>
           <button
             id="btn-close-howto"
             className="btn-ghost"
             onClick={onClose}
-            aria-label="Close how to play"
+            aria-label={t("howTo.close")}
             style={{ padding: "6px 12px", fontSize: "0.8rem" }}
           >
-            ✕ Close
+            ✕ {t("howTo.close")}
           </button>
         </div>
 
         <div className={styles.steps}>
-          {STEPS.map((step, i) => (
+          {steps.map((step: any, i: number) => (
             <div key={i} className={styles.step}>
               <div className={styles.stepIcon}>{step.icon}</div>
               <div className={styles.stepContent}>
@@ -52,11 +56,11 @@ export default function HowToModal({ onClose }: HowToModalProps) {
 
         <div className={styles.tip}>
           <span>💡</span>
-          <span>Tip: Fewer moves = more stars ⭐⭐⭐</span>
+          <span>{t("howTo.tip")} ⭐⭐⭐</span>
         </div>
 
         <button id="btn-howto-start" className={`btn-primary ${styles.cta}`} onClick={onClose}>
-          Got it — Let&apos;s Play! 🚀
+          {t("howTo.gotIt")} 🚀
         </button>
       </div>
     </div>

@@ -1,16 +1,16 @@
-"use client";
-
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./StatsBar.module.css";
 
 interface StatsBarProps {
   moves: number;
   timeStr: string;
-  difficulty: string;
+  difficulty: string; // This will now be the difficulty key ("easy", etc.)
   difficultyColor: string;
   status: string;
   onPause: () => void;
   onReset: () => void;
   onNewGame: () => void;
+  variant?: "default" | "sidebar";
 }
 
 export default function StatsBar({
@@ -22,39 +22,45 @@ export default function StatsBar({
   onPause,
   onReset,
   onNewGame,
+  variant = "default",
 }: StatsBarProps) {
+  const { t } = useTranslation();
+  const isSidebar = variant === "sidebar";
   const isPaused = status === "paused";
 
   return (
-    <div className={styles.bar}>
-      {/* Difficulty pill */}
-      <div className={styles.stat}>
-        <span className={styles.statLabel}>Difficulty</span>
-        <span
-          className={styles.statValue}
-          style={{ color: difficultyColor, textShadow: `0 0 12px ${difficultyColor}80` }}
-        >
-          {difficulty}
-        </span>
+    <div className={`${styles.bar} ${isSidebar ? styles.barSidebar : ""}`}>
+      <div className={styles.statsContent}>
+        {/* Difficulty + Moves Group */}
+        <div className={styles.statGroup}>
+          <div className={styles.stat}>
+            <span className={styles.statLabel}>{t("common.difficulty")}</span>
+            <span
+              className={styles.statValue}
+              style={{ color: difficultyColor, textShadow: `0 0 12px ${difficultyColor}80` }}
+            >
+              {t(`difficulty.${difficulty.toLowerCase()}`)}
+            </span>
+          </div>
+
+          <div className={styles.divider} />
+
+          <div className={`${styles.stat} ${styles.movesStat}`}>
+            <span className={styles.statLabel}>{t("common.moves")}</span>
+            <span className={`${styles.statValue} ${styles.movesValue}`}>{moves}</span>
+          </div>
+        </div>
+
+        <div className={styles.dividerMain} />
+
+        {/* Timer */}
+        <div className={styles.stat}>
+          <span className={styles.statLabel}>{t("common.time")}</span>
+          <span className={`${styles.statValue} ${styles.timerValue}`}>{timeStr}</span>
+        </div>
       </div>
 
-      <div className={styles.divider} />
-
-      {/* Moves */}
-      <div className={styles.stat}>
-        <span className={styles.statLabel}>Moves</span>
-        <span className={`${styles.statValue} ${styles.movesValue}`}>{moves}</span>
-      </div>
-
-      <div className={styles.divider} />
-
-      {/* Timer */}
-      <div className={styles.stat}>
-        <span className={styles.statLabel}>Time</span>
-        <span className={`${styles.statValue} ${styles.timerValue}`}>{timeStr}</span>
-      </div>
-
-      <div className={styles.spacer} />
+      {!isSidebar && <div className={styles.spacer} />}
 
       {/* Controls */}
       <div className={styles.controls}>
@@ -62,27 +68,27 @@ export default function StatsBar({
           id="btn-stats-new"
           className={`btn-ghost ${styles.ctrlBtn}`}
           onClick={onNewGame}
-          aria-label="Start new puzzle"
+          aria-label={t("game.newPuzzle")}
         >
-          🔀 New Puzzle
+          🔀 {t("game.newPuzzle")}
         </button>
         {status === "playing" || status === "paused" ? (
           <button
             id="btn-pause"
             className={`btn-ghost ${styles.ctrlBtn}`}
             onClick={onPause}
-            aria-label={isPaused ? "Resume game" : "Pause game"}
+            aria-label={isPaused ? t("game.resume") : t("game.pause")}
           >
-            {isPaused ? "▶ Resume" : "⏸ Pause"}
+            {isPaused ? `▶ ${t("game.resume")}` : `⏸ ${t("game.pause")}`}
           </button>
         ) : null}
         <button
           id="btn-reset"
           className={`btn-ghost ${styles.ctrlBtn}`}
           onClick={onReset}
-          aria-label="Reset game"
+          aria-label={t("game.reset")}
         >
-          🔄 Reset
+          🔄 {t("game.reset")}
         </button>
       </div>
     </div>

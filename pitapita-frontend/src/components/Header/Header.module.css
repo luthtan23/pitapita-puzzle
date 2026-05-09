@@ -142,3 +142,50 @@
   .desktopNav { display: none; }
   .mobileNav { display: block; }
 }
+
+.langSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--clr-border);
+}
+
+.langBtn {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--clr-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.langBtn:hover {
+  color: var(--clr-text-primary);
+}
+
+.langBtnActive {
+  color: var(--clr-primary) !important;
+}
+
+.langDivider {
+  font-size: 0.7rem;
+  color: var(--clr-border);
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: var(--clr-border);
+  margin: 4px 12px;
+}
+
+.mobileLangRow {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 12px;
+}

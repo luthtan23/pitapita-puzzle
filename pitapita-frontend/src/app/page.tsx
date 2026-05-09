@@ -91,21 +91,21 @@ export default function PuzzlePage() {
             <ReferencePanel
               imageUrl={selectedImage}
               gameStatus={state.status}
-            />
-
-            {/* Right Side: Stats + Board */}
-            <div className="puzzle-workplace" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            >
               <StatsBar
                 moves={state.moves}
                 timeStr={formatTime(state.elapsedSecs)}
-                difficulty={difficultyCfg.label}
+                difficulty={state.difficulty}
                 difficultyColor={difficultyCfg.color}
                 status={state.status}
                 onPause={togglePause}
                 onReset={resetGame}
                 onNewGame={() => startGame()}
+                variant="sidebar"
               />
-              
+            </ReferencePanel>
+
+            <div className="puzzle-workplace" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
               <div style={{ position: "relative" }}>
                 <PuzzleBoard
                   pieces={sortedPieces}

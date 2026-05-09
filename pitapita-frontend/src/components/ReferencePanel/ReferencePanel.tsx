@@ -1,28 +1,30 @@
-"use client";
-
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./ReferencePanel.module.css";
 
 interface ReferencePanelProps {
   imageUrl: string;
   gameStatus: string;
+  children?: React.ReactNode;
 }
 
 
 export default function ReferencePanel({
   imageUrl,
   gameStatus,
+  children,
 }: ReferencePanelProps) {
+  const { t } = useTranslation();
   const [peeking, setPeeking] = useState(false);
   const isPlaying = gameStatus === "playing" || gameStatus === "paused";
 
   return (
-    <aside className={`${styles.panel} glass-card`} aria-label="Reference panel">
+    <aside className={`${styles.panel} glass-card`} aria-label={t("game.referenceImage")}>
       {/* ── Reference image ─────────────────────────────────────────── */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>
-          <span>🖼️</span> Reference Image
+          <span>🖼️</span> {t("game.referenceImage")}
         </h2>
         <div
           className={`${styles.previewWrapper} ${peeking ? styles.peeking : ""}`}
@@ -30,11 +32,11 @@ export default function ReferencePanel({
           onMouseLeave={() => setPeeking(false)}
           onTouchStart={() => setPeeking(true)}
           onTouchEnd={() => setPeeking(false)}
-          aria-label="Hover to peek at the reference image"
+          aria-label={t("game.peek")}
         >
           <Image
             src={imageUrl}
-            alt="Puzzle reference image"
+            alt={t("game.referenceImage")}
             fill
             className={styles.previewImg}
             style={{ objectFit: "cover" }}
@@ -43,13 +45,13 @@ export default function ReferencePanel({
           {!peeking && (
             <div className={styles.peekOverlay}>
               <span className={styles.peekIcon}>👁️</span>
-              <span className={styles.peekLabel}>Peek</span>
+              <span className={styles.peekLabel}>{t("game.peek")}</span>
             </div>
           )}
         </div>
       </section>
 
-
+      {children}
     </aside>
   );
 }

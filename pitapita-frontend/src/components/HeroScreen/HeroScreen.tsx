@@ -1,6 +1,6 @@
-"use client";
-
+import React from "react";
 import Image from "next/image";
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./HeroScreen.module.css";
 import type { Difficulty } from "@/types/puzzle";
 import { DIFFICULTY_CONFIGS } from "@/types/puzzle";
@@ -31,6 +31,8 @@ export default function HeroScreen({
   onLogout,
   onSetImage,
 }: HeroScreenProps) {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.hero}>
       {/* Top Bar / Auth */}
@@ -38,11 +40,11 @@ export default function HeroScreen({
         {user ? (
           <div className={styles.userProfile}>
             <span className={styles.userName}>👋 {user.username}</span>
-            <button className="btn-link" onClick={onLogout} style={{ fontSize: '0.8rem' }}>Sign Out</button>
+            <button className="btn-link" onClick={onLogout} style={{ fontSize: '0.8rem' }}>{t("header.logout")}</button>
           </div>
         ) : (
           <button className="btn-primary" onClick={onAuth} style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
-            🔑 Sign In
+            🔑 {t("header.login")}
           </button>
         )}
       </div>
@@ -50,15 +52,14 @@ export default function HeroScreen({
       {/* Headline */}
       <div className={styles.headline}>
         <div className={styles.badge}>
-          <span className="badge badge-primary">🧩 Image Puzzle</span>
+          <span className="badge badge-primary">🧩 PitaPita Puzzle</span>
         </div>
         <h1 className={styles.title}>
           Drag. Drop.<br />
           <span className={styles.titleAccent}>Solve.</span>
         </h1>
         <p className={styles.desc}>
-          Rearrange beautiful picture pieces using drag-and-drop.<br />
-          Choose your difficulty and challenge yourself!
+          {t("hero.description")}
         </p>
       </div>
 
@@ -86,7 +87,7 @@ export default function HeroScreen({
       
       {/* Puzzle Catalog */}
       <div className={styles.catalogSection}>
-        <p className={styles.sectionLabel}>Select Puzzle</p>
+        <p className={styles.sectionLabel}>{t("hero.selectPuzzle")}</p>
         <PuzzleCatalog 
           currentImageUrl={imageUrl}
           onSelect={onSetImage}
@@ -95,7 +96,7 @@ export default function HeroScreen({
 
       {/* Difficulty chooser */}
       <div className={styles.diffSection}>
-        <p className={styles.diffLabel}>Choose Difficulty</p>
+        <p className={styles.diffLabel}>{t("hero.chooseDifficulty")}</p>
         <div className={styles.diffRow}>
           {DIFFICULTIES.map((d) => {
             const cfg = DIFFICULTY_CONFIGS[d];
@@ -113,8 +114,8 @@ export default function HeroScreen({
                 aria-pressed={difficulty === d}
               >
                 <span className={styles.diffEmoji}>{cfg.emoji}</span>
-                <span className={styles.diffLabel2}>{cfg.label}</span>
-                <span className={styles.diffSize}>{cfg.grid}×{cfg.grid}</span>
+                <span className={styles.diffLabel2}>{t(`difficulty.${d}`)}</span>
+                <span className={styles.diffSize}>{t("difficulty.size", { n: cfg.grid })}</span>
               </button>
             );
           })}
@@ -124,10 +125,10 @@ export default function HeroScreen({
       {/* CTAs */}
       <div className={styles.ctas}>
         <button id="btn-hero-start" className={`btn-primary ${styles.ctaPrimary}`} onClick={onStart}>
-          🚀 Start Puzzle
+          🚀 {t("hero.startPuzzle")}
         </button>
         <button id="btn-hero-howto" className="btn-ghost" onClick={onHowTo}>
-          ❓ How to Play
+          ❓ {t("header.howToPlay")}
         </button>
       </div>
 

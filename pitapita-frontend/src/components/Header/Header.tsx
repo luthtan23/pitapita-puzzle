@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "@/i18n/LanguageContext";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
@@ -9,6 +10,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onLeaderboard, onHowTo }: HeaderProps) {
+  const { t, language, setLanguage } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -50,18 +52,34 @@ export default function Header({ onLeaderboard, onHowTo }: HeaderProps) {
               id="btn-leaderboard"
               className={`btn-ghost ${styles.navBtn}`}
               onClick={onLeaderboard}
-              aria-label="Open leaderboard"
+              aria-label={t("header.leaderboard")}
             >
-              <span aria-hidden="true">🏆</span> Leaderboard
+              <span aria-hidden="true">🏆</span> {t("header.leaderboard")}
             </button>
             <button
               id="btn-howto"
               className={`btn-ghost ${styles.navBtn}`}
               onClick={onHowTo}
-              aria-label="How to play"
+              aria-label={t("header.howToPlay")}
             >
-              <span aria-hidden="true">❓</span> How to Play
+              <span aria-hidden="true">❓</span> {t("header.howToPlay")}
             </button>
+
+            <div className={styles.langSwitcher}>
+              <button 
+                className={`${styles.langBtn} ${language === 'en' ? styles.langBtnActive : ''}`}
+                onClick={() => setLanguage('en')}
+              >
+                EN
+              </button>
+              <span className={styles.langDivider}>|</span>
+              <button 
+                className={`${styles.langBtn} ${language === 'id' ? styles.langBtnActive : ''}`}
+                onClick={() => setLanguage('id')}
+              >
+                ID
+              </button>
+            </div>
           </div>
 
           {/* Mobile Nav (Three Dots) */}
@@ -83,14 +101,29 @@ export default function Header({ onLeaderboard, onHowTo }: HeaderProps) {
                   className={styles.dropdownItem}
                   onClick={() => handleAction(onLeaderboard)}
                 >
-                  <span aria-hidden="true">🏆</span> Leaderboard
+                  <span aria-hidden="true">🏆</span> {t("header.leaderboard")}
                 </button>
                 <button
                   className={styles.dropdownItem}
                   onClick={() => handleAction(onHowTo)}
                 >
-                  <span aria-hidden="true">❓</span> How to Play
+                  <span aria-hidden="true">❓</span> {t("header.howToPlay")}
                 </button>
+                <div className={styles.dropdownDivider} />
+                <div className={styles.mobileLangRow}>
+                   <button 
+                    className={`${styles.langBtn} ${language === 'en' ? styles.langBtnActive : ''}`}
+                    onClick={() => setLanguage('en')}
+                  >
+                    EN
+                  </button>
+                  <button 
+                    className={`${styles.langBtn} ${language === 'id' ? styles.langBtnActive : ''}`}
+                    onClick={() => setLanguage('id')}
+                  >
+                    ID
+                  </button>
+                </div>
               </div>
             )}
           </div>
