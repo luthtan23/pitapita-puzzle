@@ -60,6 +60,9 @@ function isSolved(pieces: PuzzlePiece[]): boolean {
 
 // ─── Hook ────────────────────────────────────────────────────────────────────
 
+import { scoreService } from "@/services/score";
+import { authService } from "@/services/auth";
+
 const SCORES_KEY = "pitapita_scores";
 
 function loadScores(): ScoreEntry[] {
@@ -71,10 +74,21 @@ function loadScores(): ScoreEntry[] {
   }
 }
 
-function saveScore(entry: ScoreEntry) {
+async function saveScore(entry: ScoreEntry) {
+  // Always save locally as fallback
   const scores = loadScores();
   scores.unshift(entry);
   localStorage.setItem(SCORES_KEY, JSON.stringify(scores.slice(0, 50)));
+
+  // Try to save to backend if authenticated
+  const token = authService.getToken();
+  if (token) {
+    try {
+      await scoreService.submitScore(entry.difficulty, entry.moves, entry.timeSecs);
+    } catch (error) {
+      console.error("Failed to submit score to backend:", error);
+    }
+  }
 }
 
 export function usePuzzleGame(imageUrl: string) {
@@ -131,39 +145,41 @@ export function usePuzzleGame(imageUrl: string) {
   const swapPieces = useCallback(
     (fromId: string, toId: string) => {
       if (state.status !== "playing") return;
-      setState((prev) => {
-        const pieces = prev.pieces.map((p) => ({ ...p }));
-        const fromPiece = pieces.find((p) => p.id === fromId);
-        const toPiece = pieces.find((p) => p.id === toId);
-        if (!fromPiece || !toPiece) return prev;
-        const tmp = fromPiece.currentIndex;
-        fromPiece.currentIndex = toPiece.currentIndex;
-        toPiece.currentIndex = tmp;
 
-        const nextMoves = prev.moves + 1;
-        const won = isSolved(pieces);
+      const pieces = state.pieces.map((p) => ({ ...p }));
+      const fromPiece = pieces.find((p) => p.id === fromId);
+      const toPiece = pieces.find((p) => p.id === toId);
+      
+      if (!fromPiece || !toPiece) return;
+      
+      const tmp = fromPiece.currentIndex;
+      fromPiece.currentIndex = toPiece.currentIndex;
+      toPiece.currentIndex = tmp;
 
-        if (won) {
-          const entry: ScoreEntry = {
-            id: Date.now().toString(),
-            difficulty: prev.difficulty,
-            moves: nextMoves,
-            timeSecs: prev.elapsedSecs,
-            date: new Date().toISOString(),
-          };
-          saveScore(entry);
-          setScores(loadScores());
-        }
+      const nextMoves = state.moves + 1;
+      const won = isSolved(pieces);
 
-        return {
-          ...prev,
-          pieces,
+      if (won) {
+        const entry: ScoreEntry = {
+          id: Date.now().toString(),
+          difficulty: state.difficulty,
           moves: nextMoves,
-          status: won ? "won" : "playing",
+          timeSecs: state.elapsedSecs,
+          date: new Date().toISOString(),
         };
-      });
+        saveScore(entry).then(() => {
+          setScores(loadScores());
+        });
+      }
+
+      setState((prev) => ({
+        ...prev,
+        pieces,
+        moves: nextMoves,
+        status: won ? "won" : "playing",
+      }));
     },
-    [state.status]
+    [state.status, state.pieces, state.moves, state.difficulty, state.elapsedSecs]
   );
 
   const togglePause = useCallback(() => {

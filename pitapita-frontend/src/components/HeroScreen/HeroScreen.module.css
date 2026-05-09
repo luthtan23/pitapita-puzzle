@@ -1,4 +1,5 @@
 .hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,6 +10,31 @@
   margin: 0 auto;
   gap: 48px;
   animation: fadeIn var(--dur-slow) var(--ease-smooth);
+}
+
+.topBar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  border: 1px solid var(--clr-border);
+}
+
+.userName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-text-primary);
 }
 
 /* ── Headline ───────────────────────────────────────────────────── */
@@ -168,13 +194,36 @@
 }
 
 .featureChip {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--clr-text-secondary);
-  background: rgba(255,255,255,0.04);
-  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 12px;
   border-radius: 99px;
   border: 1px solid var(--clr-border);
+}
+
+.catalogSection {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 10px;
+}
+
+.diffSection {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 10px;
+}
+
+.sectionLabel,
+.diffLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-text-muted);
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 @media (max-width: 640px) {

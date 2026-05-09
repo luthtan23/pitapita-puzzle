@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 
+export const viewport = {
+  themeColor: "#a855f7",
+};
+
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -21,6 +25,11 @@ export const metadata: Metadata = {
   description:
     "PitaPita – A stunning, interactive image puzzle game. Drag, drop and solve beautiful picture puzzles with multiple difficulty levels.",
   keywords: ["puzzle", "image puzzle", "drag and drop", "game", "pitapita"],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "PitaPita",
+  },
   openGraph: {
     title: "PitaPita · Image Puzzle Game",
     description: "Solve beautiful picture puzzles with drag-and-drop pieces.",

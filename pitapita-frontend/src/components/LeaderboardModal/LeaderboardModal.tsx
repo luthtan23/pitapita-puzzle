@@ -1,8 +1,8 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import styles from "./LeaderboardModal.module.css";
 import type { ScoreEntry, Difficulty } from "@/types/puzzle";
 import { DIFFICULTY_CONFIGS } from "@/types/puzzle";
+import { scoreService } from "@/services/score";
 
 interface LeaderboardModalProps {
   scores: ScoreEntry[];
@@ -21,8 +21,33 @@ function formatDate(iso: string) {
   });
 }
 
-export default function LeaderboardModal({ scores, onClose }: LeaderboardModalProps) {
-  const top = scores.slice(0, 20);
+export default function LeaderboardModal({ scores: localScores, onClose }: LeaderboardModalProps) {
+  const [tab, setTab] = useState<"local" | "global">("local");
+  const [globalScores, setGlobalScores] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | "all">("all");
+
+  useEffect(() => {
+    if (tab === "global") {
+      fetchGlobalScores();
+    }
+  }, [tab, selectedDifficulty]);
+
+  const fetchGlobalScores = async () => {
+    setLoading(true);
+    try {
+      const data = await scoreService.getLeaderboard(selectedDifficulty === "all" ? undefined : selectedDifficulty);
+      setGlobalScores(data || []);
+    } catch (error) {
+      console.error("Failed to fetch global scores:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const currentScores = tab === "local" 
+    ? (selectedDifficulty === "all" ? localScores : localScores.filter(s => s.difficulty === selectedDifficulty)).slice(0, 20)
+    : globalScores;
 
   return (
     <div
@@ -49,11 +74,42 @@ export default function LeaderboardModal({ scores, onClose }: LeaderboardModalPr
           </button>
         </div>
 
+        {/* Tabs */}
+        <div className={styles.tabs}>
+          <button 
+            className={`${styles.tab} ${tab === "local" ? styles.activeTab : ""}`}
+            onClick={() => setTab("local")}
+          >
+            Local
+          </button>
+          <button 
+            className={`${styles.tab} ${tab === "global" ? styles.activeTab : ""}`}
+            onClick={() => setTab("global")}
+          >
+            Global
+          </button>
+        </div>
+
+        {/* Difficulty Filter */}
+        <div className={styles.filters}>
+          {(["all", "easy", "medium", "hard", "expert"] as const).map(d => (
+            <button
+              key={d}
+              className={`${styles.filterBtn} ${selectedDifficulty === d ? styles.activeFilter : ""}`}
+              onClick={() => setSelectedDifficulty(d)}
+            >
+              {d === "all" ? "All" : DIFFICULTY_CONFIGS[d].label}
+            </button>
+          ))}
+        </div>
+
         {/* Table */}
-        {top.length === 0 ? (
+        {loading ? (
+          <div className={styles.empty}>Loading...</div>
+        ) : currentScores.length === 0 ? (
           <div className={styles.empty}>
             <span className={styles.emptyIcon}>🎮</span>
-            <p>No scores yet. Complete a puzzle to appear here!</p>
+            <p>No scores yet. {tab === "local" ? "Complete a puzzle to appear here!" : "Be the first to top the global charts!"}</p>
           </div>
         ) : (
           <div className={styles.tableWrapper}>
@@ -61,6 +117,7 @@ export default function LeaderboardModal({ scores, onClose }: LeaderboardModalPr
               <thead>
                 <tr>
                   <th>#</th>
+                  {tab === "global" && <th>Player</th>}
                   <th>Difficulty</th>
                   <th>Moves</th>
                   <th>Time</th>
@@ -68,7 +125,7 @@ export default function LeaderboardModal({ scores, onClose }: LeaderboardModalPr
                 </tr>
               </thead>
               <tbody>
-                {top.map((entry, i) => {
+                {currentScores.map((entry, i) => {
                   const cfg = DIFFICULTY_CONFIGS[entry.difficulty as Difficulty];
                   const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : null;
                   return (
@@ -76,6 +133,11 @@ export default function LeaderboardModal({ scores, onClose }: LeaderboardModalPr
                       <td className={styles.rank}>
                         {medal ?? <span className={styles.rankNum}>{i + 1}</span>}
                       </td>
+                      {tab === "global" && (
+                        <td className={styles.playerCell}>
+                          {entry.user?.username || "Anonymous"}
+                        </td>
+                      )}
                       <td>
                         <span
                           className={styles.diffPill}
@@ -95,7 +157,9 @@ export default function LeaderboardModal({ scores, onClose }: LeaderboardModalPr
           </div>
         )}
 
-        <p className={styles.note}>Scores are saved locally in your browser.</p>
+        <p className={styles.note}>
+          {tab === "local" ? "Scores are saved locally in your browser." : "Global rankings across all players."}
+        </p>
       </div>
     </div>
   );

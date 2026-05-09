@@ -10,6 +10,7 @@ interface StatsBarProps {
   status: string;
   onPause: () => void;
   onReset: () => void;
+  onNewGame: () => void;
 }
 
 export default function StatsBar({
@@ -20,6 +21,7 @@ export default function StatsBar({
   status,
   onPause,
   onReset,
+  onNewGame,
 }: StatsBarProps) {
   const isPaused = status === "paused";
 
@@ -56,6 +58,14 @@ export default function StatsBar({
 
       {/* Controls */}
       <div className={styles.controls}>
+        <button
+          id="btn-stats-new"
+          className={`btn-ghost ${styles.ctrlBtn}`}
+          onClick={onNewGame}
+          aria-label="Start new puzzle"
+        >
+          🔀 New Puzzle
+        </button>
         {status === "playing" || status === "paused" ? (
           <button
             id="btn-pause"

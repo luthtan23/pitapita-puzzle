@@ -43,16 +43,78 @@
   background-clip: text;
 }
 
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+
+.tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: var(--clr-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: calc(var(--radius-md) - 2px);
+  cursor: pointer;
+  transition: all var(--dur-fast) ease;
+}
+
+.activeTab {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--clr-text-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filterBtn {
+  white-space: nowrap;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--clr-border);
+  background: transparent;
+  color: var(--clr-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) ease;
+}
+
+.activeFilter {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+  background: rgba(var(--clr-accent-rgb), 0.1);
+}
+
+.playerCell {
+  font-weight: 700;
+  color: var(--clr-text-primary);
+}
+
 /* Empty state */
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   padding: 40px 20px;
   color: var(--clr-text-secondary);
   font-size: 0.95rem;
   text-align: center;
+  flex: 1;
 }
 .emptyIcon { font-size: 3rem; }
 

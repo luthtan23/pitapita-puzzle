@@ -1,0 +1,16 @@
+# Go binaries
+bin/
+pitapita-backend
+
+# Dependency directories
+vendor/
+
+# Env
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
