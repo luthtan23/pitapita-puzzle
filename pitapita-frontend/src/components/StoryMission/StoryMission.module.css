@@ -1,0 +1,159 @@
+.missionCard {
+  margin: 40px auto;
+  max-width: 900px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.15);
+  animation: fadeInUp 0.8s var(--ease-smooth);
+}
+
+.missionCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--grad-accent);
+}
+
+.badge {
+  margin-bottom: 20px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 32px;
+  align-items: center;
+}
+
+.textSide {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--clr-text-secondary);
+}
+
+.riddleBox {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(168, 85, 247, 0.08);
+  border-left: 3px solid var(--clr-primary);
+  border-radius: 4px;
+}
+
+.riddleIcon {
+  font-size: 1.2rem;
+}
+
+.riddleText {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--clr-text-primary);
+  line-height: 1.5;
+}
+
+.startBtn {
+  align-self: flex-start;
+  padding: 12px 28px !important;
+  font-size: 1rem !important;
+  margin-top: 10px;
+}
+
+.imageSide {
+  perspective: 1000px;
+}
+
+.imagePreview {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: rotateY(-10deg);
+  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.5s var(--ease-smooth);
+}
+
+.imagePreview:hover {
+  transform: rotateY(0deg);
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+  animation: scan 3s linear infinite;
+  z-index: 2;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  from { top: -2%; }
+  to { top: 102%; }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .imageSide {
+    order: -1;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .imagePreview {
+    transform: none;
+  }
+}

@@ -78,6 +78,14 @@ export const en = {
     noteGlobal: "Global rankings across all players.",
     anonymous: "Anonymous"
   },
+  story: {
+    title: "Cyber Trace: The Last Fragment",
+    role: "Data Recovery Specialist",
+    year: "2077",
+    mission: "A mega-corporation just performed a 'digital wipe' to erase evidence of an environmental scandal. Your mission: reconstruct the corrupted data fragments before their security system traces you.",
+    riddle: "I have no voice, but I tell the truth. I have no eyes, but I've seen the proof. I am the data they tried to delete. Put me together to make the scandal complete.",
+    startMission: "Accept Mission",
+  },
   auth: {
     loginTitle: "Welcome Back",
     registerTitle: "Create Account",

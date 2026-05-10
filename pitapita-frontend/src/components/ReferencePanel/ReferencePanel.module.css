@@ -142,3 +142,39 @@
   color: var(--clr-text-secondary);
   font-variant-numeric: tabular-nums;
 }
+
+.missionActiveBadge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+.missionIcon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 8px var(--clr-primary));
+}
+
+.missionText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.missionTitle {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--clr-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.missionSubtitle {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  font-weight: 600;
+}

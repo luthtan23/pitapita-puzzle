@@ -5,6 +5,7 @@ import styles from "./HeroScreen.module.css";
 import type { Difficulty } from "@/types/puzzle";
 import { DIFFICULTY_CONFIGS } from "@/types/puzzle";
 import PuzzleCatalog from "@/components/PuzzleCatalog/PuzzleCatalog";
+import StoryMission from "@/components/StoryMission/StoryMission";
 
 interface HeroScreenProps {
   imageUrl: string;
@@ -19,6 +20,7 @@ interface HeroScreenProps {
 }
 
 const DIFFICULTIES = Object.keys(DIFFICULTY_CONFIGS) as Difficulty[];
+const STORY_MISSION_IMAGE = "/cyber_trace_puzzle_1778345372080.png";
 
 export default function HeroScreen({
   imageUrl,
@@ -32,6 +34,14 @@ export default function HeroScreen({
   onSetImage,
 }: HeroScreenProps) {
   const { t } = useTranslation();
+
+  const handleStartMission = (img: string) => {
+    onSetImage(img);
+    onSetDifficulty("hard"); // Default to hard for mission
+    setTimeout(() => {
+      onStart();
+    }, 100);
+  };
 
   return (
     <div className={styles.hero}>
@@ -62,6 +72,12 @@ export default function HeroScreen({
           {t("hero.description")}
         </p>
       </div>
+
+      {/* Story Mission */}
+      <StoryMission 
+        missionImageUrl={STORY_MISSION_IMAGE} 
+        onStart={handleStartMission} 
+      />
 
       {/* Preview image floating */}
       <div className={styles.imageWrapper}>

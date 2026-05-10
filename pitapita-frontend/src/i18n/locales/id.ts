@@ -78,6 +78,14 @@ export const id = {
     noteGlobal: "Peringkat global di antara semua pemain.",
     anonymous: "Anonim"
   },
+  story: {
+    title: "Cyber Trace: Fragmen Terakhir",
+    role: "Spesialis Pemulihan Data",
+    year: "2077",
+    mission: "Sebuah korporasi besar baru saja melakukan 'digital wipe' untuk menghapus bukti skandal lingkungan. Tugas Anda adalah menyusun kembali fragmen data yang korup sebelum sistem keamanan mereka mendeteksi keberadaan Anda.",
+    riddle: "Aku tak bersuara, tapi bicara kebenaran. Aku tak bermata, tapi saksi pembuktian. Aku adalah data yang ingin mereka musnahkan. Susunlah aku untuk mengungkap skandal yang dirahasiakan.",
+    startMission: "Terima Misi",
+  },
   auth: {
     loginTitle: "Selamat Datang Kembali",
     registerTitle: "Buat Akun",
